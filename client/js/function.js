@@ -72,6 +72,16 @@ function goDetailGroup(data) {
   $("#get-projects-id-page").show();
   $("#group-todo-list").empty();
 
+  let liUser = "";
+  let { users } = data;
+  users.forEach(user => {
+    liUser += `
+      <li>${user.email}</li>
+    `;
+  });
+  $("#list-user").empty();
+  $("#list-user").append(liUser);
+
   let exitBtn = `
     <button class="btn btn-danger fw" onclick="exitGroup('${data._id}')">Exit Group</button>
   `;
@@ -96,7 +106,7 @@ function goDetailGroup(data) {
     let doneBtn = "";
     if (todo.status === "undone") {
       doneBtn = `
-                <button onclick="updateTodo('${todo._id}')" class="btn btn-primary btn-sm">Done it</button>
+                <button onclick="updateTodo('${todo._id}', '${todo.projectId}')" class="btn btn-primary btn-sm">Done it</button>
             `;
     }
 
@@ -121,9 +131,9 @@ function goDetailGroup(data) {
                         <div class="card-footer">
                         <div class="d-flex justify-content-between fw">
                         
-                        <button onclick="deleteTodo('${
-                          todo._id
-                        }')" class="btn btn-danger btn-sm">Delete</button>
+                        <button onclick="deleteTodo('${todo._id}', '${
+      todo.projectId
+    }')" class="btn btn-danger btn-sm">Delete</button>
                         
                         ${doneBtn}
                         </div>

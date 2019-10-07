@@ -60,29 +60,35 @@ function fetchTodos() {
     });
 }
 
-function goCreateTodo(projectId = -1) {
+function goCreateTodo(projectId) {
   hideAll();
-  let inputProject = `
+  if (projectId) {
+    let inputProject = `
         <input id="add-todo-project" type="hidden" value="${projectId}">
     `;
 
-  $("#containInput").append(inputProject);
+    $("#containInput").append(inputProject);
+  }
   $("#post-todos-page").show();
 }
 
 $("#add-todo-form").submit(function(event) {
   event.preventDefault();
+  let data = {
+    name: $("#add-todo-name").val(),
+    description: $("#add-todo-description").val(),
+    dueDate: $("#add-todo-date").val(),
+    projectId: $("#add-todo-project").val()
+  };
+
+  console.log(data);
+
   axios({
     url: "/todos",
     method: "post",
     baseURL: "http://localhost:3000",
     headers: { token: localStorage.getItem("token") },
-    data: {
-      name: $("#add-todo-name").val() || undefined,
-      description: $("#add-todo-description").val() || undefined,
-      dueDate: $("#add-todo-date").val() || undefined,
-      projectId: $("#add-todo-project").val() || -1
-    }
+    data
   })
     .then(({ data }) => {
       resetAddTodo();
@@ -109,7 +115,7 @@ function resetAddTodo() {
   $("#add-todo-project").val("");
 }
 
-function deleteTodo(id) {
+function deleteTodo(id, projectId) {
   axios({
     url: `/todos/${id}`,
     method: "delete",
@@ -117,7 +123,8 @@ function deleteTodo(id) {
     headers: { token: localStorage.getItem("token") }
   })
     .then(_ => {
-      goHome();
+      if (projectId) detailProject(projectId);
+      else goHome();
     })
     .catch(err => {
       Swal.fire({
@@ -127,7 +134,7 @@ function deleteTodo(id) {
     });
 }
 
-function updateTodo(id) {
+function updateTodo(id, projectId) {
   axios({
     url: `/todos/${id}`,
     method: "patch",
@@ -138,8 +145,8 @@ function updateTodo(id) {
     }
   })
     .then(_ => {
-      hideAll();
-      goHome();
+      if (projectId) detailProject(projectId);
+      else goHome();
     })
     .catch(err => {
       Swal.fire({

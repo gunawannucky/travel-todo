@@ -18,15 +18,17 @@ function todoAuthorization(req, res, next) {
       if (todo.userId == userId) {
         next();
       } else if (todo.projectId) {
-        Project.findById(todo.projectId).then(project => {
-          if (project.users.includes(userId)) {
-            next();
-          } else
-            next({
-              statusCode: 401,
-              msg: "not authorized"
-            });
-        });
+        Project.findById(todo.projectId)
+          .then(project => {
+            if (project && project.users && project.users.includes(userId)) {
+              next();
+            } else
+              next({
+                statusCode: 401,
+                msg: "not authorized"
+              });
+          })
+          .catch(next);
       } else {
         next({
           statusCode: 401,

@@ -121,7 +121,7 @@ $("#add-member-form").submit(function(event) {
   })
     .then(({ data }) => {
       $("#add-member-email").val("");
-      goGroup();
+      detailProject(data._id);
     })
     .catch(err => {
       $("#add-member-email").val("");

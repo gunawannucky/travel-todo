@@ -5,14 +5,13 @@ class TodoController {
     const userId = req.loggedInUser._id;
     let { name, description, dueDate, projectId } = req.body;
     dueDate = new Date(dueDate);
-    console.log(dueDate);
     if (new Date(dueDate) < new Date()) {
       next({
         statusCode: 400,
         message: "invalid due date"
       });
     } else {
-      if (projectId == -1) {
+      if (!projectId) {
         Todo.create({
           name,
           description,
