@@ -19,7 +19,7 @@ $("#register-form").submit(function(event) {
   event.preventDefault();
   $.ajax({
     method: "post",
-    url: "http://localhost:3000/users/register",
+    url: `${$BASE_URL}/users/register`,
     data: {
       name: $("#reg-name").val(),
       email: $("#reg-email").val(),
@@ -45,7 +45,7 @@ $("#login-form").submit(function(event) {
   event.preventDefault();
   $.ajax({
     method: "post",
-    url: "http://localhost:3000/users/login",
+    url: `${$BASE_URL}/users/login`,
     data: {
       email: $("#login-email").val(),
       password: $("#login-password").val()
@@ -71,7 +71,7 @@ function onSignIn(googleUser) {
 
   $.ajax({
     method: "post",
-    url: "http://localhost:3000/users/googleSignIn",
+    url: `${$BASE_URL}/users/googleSignIn`,
     headers: {
       id_token
     }

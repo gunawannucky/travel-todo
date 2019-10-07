@@ -50,7 +50,7 @@ function exitGroup(id) {
   axios({
     url: `/projects/${id}/exit`,
     method: "get",
-    baseURL: "http://localhost:3000",
+    baseURL: $BASE_URL,
     headers: { token: localStorage.getItem("token") },
     data: {
       email: $("#add-member-email").val() || undefined

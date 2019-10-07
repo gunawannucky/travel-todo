@@ -2,7 +2,7 @@ function fetchTodos() {
   axios({
     url: "/todos",
     method: "get",
-    baseURL: "http://localhost:3000",
+    baseURL: $BASE_URL,
     headers: { token: localStorage.getItem("token") }
   })
     .then(({ data }) => {
@@ -86,7 +86,7 @@ $("#add-todo-form").submit(function(event) {
   axios({
     url: "/todos",
     method: "post",
-    baseURL: "http://localhost:3000",
+    baseURL: $BASE_URL,
     headers: { token: localStorage.getItem("token") },
     data
   })
@@ -119,7 +119,7 @@ function deleteTodo(id, projectId) {
   axios({
     url: `/todos/${id}`,
     method: "delete",
-    baseURL: "http://localhost:3000",
+    baseURL: $BASE_URL,
     headers: { token: localStorage.getItem("token") }
   })
     .then(_ => {
@@ -138,7 +138,7 @@ function updateTodo(id, projectId) {
   axios({
     url: `/todos/${id}`,
     method: "patch",
-    baseURL: "http://localhost:3000",
+    baseURL: $BASE_URL,
     headers: { token: localStorage.getItem("token") },
     data: {
       status: "done"
