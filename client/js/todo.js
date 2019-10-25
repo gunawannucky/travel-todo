@@ -66,7 +66,7 @@ function goCreateTodo(projectId) {
     let inputProject = `
         <input id="add-todo-project" type="hidden" value="${projectId}">
     `;
-
+    $("#containInput").empty();
     $("#containInput").append(inputProject);
   }
   $("#post-todos-page").show();
@@ -80,8 +80,6 @@ $("#add-todo-form").submit(function(event) {
     dueDate: $("#add-todo-date").val(),
     projectId: $("#add-todo-project").val()
   };
-
-  console.log(data);
 
   axios({
     url: "/todos",
