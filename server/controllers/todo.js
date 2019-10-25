@@ -83,7 +83,8 @@ class TodoController {
 
   static deleteOnId(req, res, next) {
     const { id } = req.params;
-    Todo.findByIdAndDelete(id)
+    $ModelName
+      .findByIdAndDelete(id)
       .then(_ => {
         res.status(204).json();
       })
